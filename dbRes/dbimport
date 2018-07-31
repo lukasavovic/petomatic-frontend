@@ -162,3 +162,32 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
+
+namespace App\Controllers;
+
+use App\Core\App;
+use Faker;
+
+class PagesController
+{
+    public function home()
+    {
+
+        $faker = Faker\Factory::create();
+        for ($i=0; $i < 5; $i++) {
+
+            $user = new User();
+            $user->setUsername($faker->username);
+            
+        }
+
+
+die;
+
+        $tasks = App::get('database')->getAll("customers");
+        
+        echo json_encode($tasks);
+    }
