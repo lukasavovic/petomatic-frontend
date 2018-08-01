@@ -1,23 +1,31 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <topbar></topbar>
+    <div class="main-content">
+      <sidebarNav class="sidebar"></sidebarNav>
+      <router-view/>
+    </div>
   </div>
 </template>
 
 <script>
+import sidebarNav from '@/components/sidebarNav'
+import topbar from '@/components/topbar'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    sidebarNav,
+    topbar
+  }
 }
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+}
+.main-content {
+  display: flex;
 }
 </style>
