@@ -3,19 +3,19 @@
     <div class="visits_navigation">
       <h1>Welcome to Pet-erinar Office App</h1>
       <router-link to="/addVisit">
-        <v-btn fab dark color="indigo">
-          <v-icon dark>add</v-icon>
+        <v-btn dark color="blue darken-3" class="buttonAddVisit">
+            Add New visit
         </v-btn>
       </router-link>
       <!--<h1 v-if="allVisits[0].date == today">Here are todays apointments</h1>-->
-      <template v-for="(item, index) in allVisits" v-if="item.date == today">
+      <template v-for="(item, index) in dateFilter" v-if="item.date == today">
 
       </template>
     </div>
     <div class="visitsTable">
       <v-data-table
         :headers="headers"
-        :items="allVisits"
+        :items="dateFilter"
         :search="search"
         :pagination.sync="pagination"
         :loading="loading"
@@ -24,9 +24,9 @@
       >
 
         <template slot="items" slot-scope="props">
-          <tr @click="props.expanded = !props.expanded" v-if="props.item.date !== today">
+          <tr @click="props.expanded = !props.expanded">
             <td >{{ props.item.date }}</td>
-            <td class="text-xs-left">{{ props.item.firstName}} {{props.item.LastName}}</td>
+            <td class="text-xs-left customerLink" @click="routerPush(props.item.customerId)">{{ props.item.firstName}} {{props.item.LastName}}</td>
             <td class="text-xs-left"> {{ props.item.petName }} </td>
             <td class="text-xs-left">{{ props.item.age }}</td>
             <td class="text-xs-left">{{ props.item.species }}</td>
@@ -39,18 +39,65 @@
           </v-card>
         </template>
       </v-data-table>
+      <div class="calendars">
+        <h3>Date Filter</h3>
+        <v-flex class="datePicker">
+          <v-menu
+            ref="menu"
+            :close-on-content-click="false"
+            v-model="menu"
+            :nudge-right="40"
+            :return-value.sync="dateFrom"
+            lazy
+            transition="scale-transition"
+            offset-y
+            full-width
+            min-width="290px">
+            <v-text-field
+              slot="activator"
+              v-model="dateFrom"
+              label="From"
+              prepend-icon="event"
+              readonly
+            ></v-text-field>
+            <v-date-picker v-model="dateFrom" :max="dateTo" @input="$refs.menu.save(dateFrom)"></v-date-picker>
 
+          </v-menu>
+        </v-flex>
+        <v-flex class="datePicker">
+          <v-menu
+            ref="menu2"
+            :close-on-content-click="false"
+            v-model="menu2"
+            :nudge-right="40"
+            :return-value.sync="dateTo"
+            lazy
+            transition="scale-transition"
+            offset-y
+            full-width
+            min-width="290px">
+            <v-text-field
+              slot="activator"
+              v-model="dateTo"
+              label="To"
+              prepend-icon="event"
+              readonly
+            ></v-text-field>
+            <v-date-picker v-model="dateTo" :min="dateFrom" @input="$refs.menu2.save(dateTo)"></v-date-picker>
+
+          </v-menu>
+        </v-flex>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-  import { EventBus } from '../main.js'
-  import visitsModal from './addVisit'
+
   export default {
     name: 'Homepage',
     components: {
-      visitsModal,
+
     },
     data () {
       return {
@@ -58,6 +105,10 @@
         desserts: [],
         loading: true,
         search: '',
+        dateFrom: null,
+        dateTo: null,
+        menu: false,
+        menu2: false,
         pagination: {
           page: 1,
           rowsPerPage: 10,
@@ -78,16 +129,36 @@
       }
     },
     methods: {
+      log(){
+        this.axios
+          .get('http://localhost:3005/app/login')
+          .then(response => (console.log(response )))
+          .then(this.loading = false)
+      },
+      dateConversion(date){
+          return new Date(date).getTime()
+      },
+      routerPush(id){
+        console.log(id);
+        this.$router.push('/app/customers/' + id);
+      }
     },
     computed:{
       today(){
           return Date.now();
-      }
+      },
+      dateFilter(){
+          if (this.dateFrom){
+            return this.allVisits.filter(visit => this.dateConversion(visit.date) > this.dateConversion(this.dateFrom))
+          } else {
+            return this.allVisits
+          }
+      },
     },
     mounted(){
       this.axios
-      .get('http://localhost:3005/visits')
-      .then(response => (this.allVisits = response.data))
+        .get('http://localhost:3005/app')
+        .then(response => (this.allVisits = response.data))
         .then(this.loading = false)
     }
   }
@@ -98,8 +169,30 @@
 .homepage {
   width: 100%;
   height: 100%;
+  .visits_navigation {
+    h1{
+      padding-left: 1%;
+      font-size: 3em;
+    }
+    .buttonAddVisit {
+      margin: 25px 5px;
+    }
+  }
+  .datePicker {
+  margin: 20% 0;
+  }
   .visitsTable {
-    width: 80%;
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    grid-gap: 1%;
+    .customerLink {
+      &:hover {
+        color: royalblue;
+        cursor: pointer;
+        font-weight: bolder;
+        transition: 0.2s all ease;
+      }
+    }
   }
 }
 </style>

@@ -93,7 +93,7 @@
       </v-navigation-drawer>
       <v-toolbar
         :clipped-left="$vuetify.breakpoint.lgAndUp"
-        color="red lighten-1"
+        color="blue darken-4"
         dark
         app
         fixed
@@ -136,9 +136,6 @@
 </template>
 
 <script>
-import sidebarNav from '@/components/sidebarNav'
-import topbar from '@/components/topbar'
-
 export default {
   name: 'App',
   components: {
@@ -201,10 +198,11 @@ export default {
       user.password = this.password;
       user =  JSON.stringify(user);
       console.log('%c' + user, 'background: #161616; color: #ffff44');
-      this.axios.post('http://localhost:3005/login', user)
+      this.axios.post('http://localhost:3005/app/login', user)
         .then( (response) => {
           if(response.data === 1) {
             this.loggedIn = true;
+            console.log('%c' + this.loggedIn, 'background: #161616; color: red');
           } else {
             this.loggedIn = false;
             console.log('%c' + response.data, 'background: #161616; color: #ffff44');
