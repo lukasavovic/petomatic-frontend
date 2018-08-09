@@ -1,6 +1,10 @@
 <template>
   <div class="container fluid">
-    <router-link to="/allUsers">Back to All Users</router-link>
+    <router-link to="/allUsers">
+      <v-btn dark color="blue darken-3" class="buttonAddVisit">
+        Back To All Users
+      </v-btn>
+    </router-link>
     <h1 class="text-lg-center text-xs-center">Add New user</h1>
     <div class="formAddUser">
       <v-text-field
@@ -28,7 +32,9 @@
         label="Repeat Password"
         required
       ></v-text-field>
-      <button @click="addUser">Submit</button>
+      <v-btn dark color="red darken-2" class="buttonAddVisit" @click="addUser">
+        Submit
+      </v-btn>
     </div>
   </div>
 </template>
@@ -75,9 +81,18 @@
 </script>
 
 <style scoped lang="scss">
+  h1{
+    margin: 30px auto;
+  }
 .formAddUser {
   width: 40%;
   margin: 0 auto;
+  border: 1px solid #4286f4;
+  padding: 40px;
+  .buttonAddVisit{
+    margin: 0 auto;
+    display: block;
+  }
   @media (max-width:750px) {
     width: 100%;
   }

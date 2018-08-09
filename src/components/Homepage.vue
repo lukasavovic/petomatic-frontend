@@ -1,7 +1,7 @@
 <template>
   <div class="homepage">
     <div class="visits_navigation">
-      <h1>Welcome to Pet-erinar Office App</h1>
+      <h1 class="text-lg-center">Welcome to Pet-erinar Office App</h1>
       <router-link to="/addVisit">
         <v-btn dark color="blue darken-3" class="buttonAddVisit">
             Add New visit

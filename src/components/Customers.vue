@@ -45,7 +45,7 @@
               </v-list-tile>
 
               <v-divider inset></v-divider>
-              <template>
+              <template class="pets">
                 <div v-for="pet in allPets" :key="customer.petId" v-if="customerHasPet(pet.customers_id, customer.id)" >
                  <div class="singlePet">
                    <p>Pet name: {{pet.name}}</p>
@@ -104,6 +104,14 @@
     grid-template-columns: 1fr 1fr;
     grid-gap: 5%;
     padding: 25px;
+    .singlePet{
+      padding: 20px;
+      p{
+        font-weight: bolder;
+        padding-left: 10%;
+        font-size: 1.5em;
+      }
+    }
     @media screen and (max-width: 700px) {
       grid-template-columns: 1fr;
     }

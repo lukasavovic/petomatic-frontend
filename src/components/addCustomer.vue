@@ -1,7 +1,9 @@
 <template>
   <div class="container fluid">
-    <router-link to="/allCustomers">Back to All Customers</router-link>
-    <h1 class="text-lg-center text-xs-center">Add New user</h1>
+    <router-link to="/allCustomers">
+      <v-btn color="error">Back To All Customers</v-btn>
+    </router-link>
+    <h1 class="text-lg-center text-xs-center">Add New Customer</h1>
     <div class="formAddUser">
       <v-text-field
         v-model="firstName"
@@ -64,7 +66,7 @@
           ></v-select>
         </v-flex>
       </div>
-      <button @click="addCustomer">Submit</button>
+      <v-btn color="error" class="submitCustomer" @click="addCustomer">Submit</v-btn>
     </div>
   </div>
 </template>
@@ -124,9 +126,8 @@
               })
           }
         } else {
-            console.log(response.data);
-            event.preventDefault();
-          }
+          event.preventDefault();
+        }
       },
       populateSpecies(data){
         for(var i=0; i< data.length; i++){
@@ -150,6 +151,15 @@
   .formAddUser {
     width: 40%;
     margin: 0 auto;
+    border: 1px solid #4286f4;
+    padding: 5%;
+    h3{
+      text-align: center;
+    }
+    .submitCustomer{
+      display: block;
+      margin: 20px auto 0;
+    }
     @media (max-width:750px) {
       width: 100%;
     }

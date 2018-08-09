@@ -1,6 +1,7 @@
 <template>
-  <div class="form">
-    <v-form  @submit="submitForm">
+  <div class="form-wrapper">
+    <h1 class="newVisit">Add New Visit</h1>
+    <v-form  @submit="submitForm" class="form">
       <!--DATE-->
       <v-flex class="datePicker">
         <v-menu
@@ -33,7 +34,7 @@
           cache-items
           hide-no-data
           hide-details
-          label="Customer"
+          label="Search Customers"
         ></v-autocomplete>
       </v-flex>
       <!--PET-->
@@ -61,8 +62,8 @@
           hint="Visit Details"
         ></v-textarea>
       </v-flex>
+      <v-btn color="error" class="logout" @click="submitForm">Submit</v-btn>
     </v-form>
-    <button @click="submitForm">SUBMIT</button>
   </div>
 </template>
 
@@ -175,8 +176,21 @@
 </script>
 
 <style scoped lang="scss">
-button {
-  border: 2px solid darkblue;
-  padding: 25px;
-}
+  .form-wrapper{
+    width: 100%;
+    .newVisit {
+      text-align: center;
+      margin: 20px auto;
+    }
+    .form {
+      width: 45%;
+      padding: 5%;
+      border: 1px solid #4286f4;
+      margin: 0 auto;
+      .logout{
+        display: block;
+        margin: 15px auto;
+      }
+    }
+  }
 </style>

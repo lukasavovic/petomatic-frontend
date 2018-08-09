@@ -13,7 +13,10 @@
           <v-text-field
             v-model="password"
             label="Password"
+            :append-icon="show1 ? 'visibility_off' : 'visibility'"
+            :type="show1 ? 'text' : 'password'"
             required
+            @click:append="show1 = !show1"
           ></v-text-field>
         </v-form>
         <v-btn
@@ -84,11 +87,12 @@
               </v-list-tile-action>
               <v-list-tile-content>
                 <v-list-tile-title>
-                    {{ item.text }}
+                  {{ item.text }}
                 </v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
           </template>
+          <v-btn color="error" class="logout" @click="loggedIn = false">Log Out</v-btn>
         </v-list>
       </v-navigation-drawer>
       <v-toolbar
@@ -100,35 +104,13 @@
       >
         <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
           <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-          <span class="hidden-sm-and-down"><router-link to="/">  Pet-erinar </router-link></span>
+          <span class="hidden-sm-and-down"><router-link to="/" class="peterinar">  Pet-erinar </router-link></span>
         </v-toolbar-title>
-        <v-text-field
-          flat
-          solo-inverted
-          hide-details
-          prepend-inner-icon="search"
-          label="Search"
-          class="hidden-sm-and-down"
-        ></v-text-field>
         <v-spacer></v-spacer>
-        <v-btn icon>
-          <v-icon>apps</v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon>notifications</v-icon>
-        </v-btn>
-        <v-btn icon large>
-          <v-avatar size="32px" tile>
-            <img
-              src="https://cdn.vuetifyjs.com/images/logos/logo.svg"
-              alt="Vuetify"
-            >
-          </v-avatar>
-        </v-btn>
       </v-toolbar>
       <v-content>
         <v-container fluid fill-height>
-            <router-view></router-view>
+          <router-view></router-view>
         </v-container>
       </v-content>
     </div>
@@ -136,117 +118,117 @@
 </template>
 
 <script>
-export default {
-  name: 'App',
-  components: {
-  },
-  data: () => ({
-    email: '',
-    password: '',
-    loggedIn: true,
-    dialog: false,
-    drawer: null,
-    items: [
-      {
-        icon: 'keyboard_arrow_up people',
-        'icon-alt': 'keyboard_arrow_down people',
-        text: 'Users',
-        model: false,
-        children: [
-          {  text: 'View Profile', path: '/userProfile'},
-          {  text: 'Edit Profile', path: '/editProfile'},
-          {  text: 'Add User', path: '/addUser'},
-          {  text: 'View All Users', path: '/allUsers'}
-        ]
-      },
-      {
-        icon: 'keyboard_arrow_up today',
-        'icon-alt': 'keyboard_arrow_down today',
-        text: 'Visits',
-        model: false,
-        children: [
-          {  text: 'View All Visits',  path: '/'},
-          {  text: 'Add Visit',  path: '/addVisit'},
-        ]
-      },
-      {
-        icon: 'keyboard_arrow_up',
-        'icon-alt': 'keyboard_arrow_down',
-        text: 'Customers',
-        model: false,
-        children: [
-          { text: 'View All Customers', path: '/allCustomers'},
-          { text: 'Add Customers', path: '/addCustomer'},
-        ]
-      },
-      {
-        icon: 'log', text: 'Log Out'
-      }
-
-    ]
-  }),
-  props: {
-    source: String
-  },
-  methods: {
-    routerPush(route) {
-      this.$router.push({path:route});
+  export default {
+    name: 'App',
+    components: {
     },
-    logIn(){
-      var user = {};
-      user.email = this.email;
-      user.password = this.password;
-      user =  JSON.stringify(user);
-      console.log('%c' + user, 'background: #161616; color: #ffff44');
-      this.axios.post('http://localhost:3005/app/login', user)
-        .then( (response) => {
-          if(response.data === 1) {
-            this.loggedIn = true;
-            console.log('%c' + this.loggedIn, 'background: #161616; color: red');
-          } else {
-            this.loggedIn = false;
-            console.log('%c' + response.data, 'background: #161616; color: #ffff44');
-          }
-        })
+    data: () => ({
+      email: '',
+      show1: false,
+      password: '',
+      loggedIn: true,
+      dialog: false,
+      drawer: null,
+      items: [
+        {
+          icon: 'keyboard_arrow_up people',
+          'icon-alt': 'keyboard_arrow_down people',
+          text: 'Users',
+          model: false,
+          children: [
+            {  text: 'View All Users', path: '/allUsers'},
+            {  text: 'Add User', path: '/addUser'}
+          ]
+        },
+        {
+          icon: 'keyboard_arrow_up today',
+          'icon-alt': 'keyboard_arrow_down today',
+          text: 'Visits',
+          model: false,
+          children: [
+            {  text: 'View All Visits',  path: '/'},
+            {  text: 'Add Visit',  path: '/addVisit'},
+          ]
+        },
+        {
+          icon: 'keyboard_arrow_up',
+          'icon-alt': 'keyboard_arrow_down',
+          text: 'Customers',
+          model: false,
+          children: [
+            { text: 'View All Customers', path: '/allCustomers'},
+            { text: 'Add Customers', path: '/addCustomer'},
+          ]
+        }
+      ]
+    }),
+    props: {
+      source: String
     },
-  },
-  mounted(){
+    methods: {
+      routerPush(route) {
+        this.$router.push({path:route});
+      },
+      logIn(){
+        var user = {};
+        user.email = this.email;
+        user.password = this.password;
+        user =  JSON.stringify(user);
+        this.axios.post('http://petomatic.test/app/login', user)
+          .then( (response) => {
+            if(response.data === 1) {
+              this.loggedIn = true;
+            } else {
+              this.loggedIn = false;
+            }
+          })
+      },
+    },
+    mounted(){
+    }
   }
-}
 
 </script>
 
 <style lang="scss">
-.addButton {
-  margin-top: 20vh;
-  right: 20vh;
-}
-.login {
-  text-align: center;
-  width: 50%;
-  max-width: 600px;
-  border: 2px solid darkgray;
-  border-radius: 20px;
-  padding: 35px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  @media screen and (max-width: 850px) {
-    width: 85%;
-    /*p {*/
+  .addButton {
+    margin-top: 20vh;
+    right: 20vh;
+  }
+  .login {
+    text-align: center;
+    width: 50%;
+    max-width: 600px;
+    border: 2px solid darkgray;
+    border-radius: 20px;
+    padding: 35px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    @media screen and (max-width: 850px) {
+      width: 85%;
+      /*p {*/
       /*display: none;*/
-    /*}*/
+      /*}*/
+    }
+    input {
+      width: 80%;
+    }
+    .loginButton {
+      display: block;
+      margin: 10px auto;
+    }
   }
-  input {
-    width: 80%;
+  .logout {
+    margin: 25px;
   }
-  .loginButton {
-    display: block;
-    margin: 10px auto;
+  .peterinar{
+    color: white;
+    font-weight: bolder;
+    letter-spacing: 5px;
   }
-}
-a{
-  text-decoration: none !important;
-}
+  a{
+    text-decoration: none !important;
+  }
 </style>
