@@ -118,7 +118,6 @@
         newVisit = [];
         if(this.date !== '' && this.customerId !== '' && this.petId){
           var newVisit = {date: this.date, customers_id: this.customerId, pets_id: this.petId, visit_type_id: this.visitType, longDescription: this.longDescription};
-          console.log(newVisit);
           this.axios
             .post('http://petomatic.test/app/visits', newVisit)
             .then( (response) => {

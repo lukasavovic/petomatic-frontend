@@ -1,6 +1,6 @@
-# petonator-frontend
+# Petonator-frontend
 
-> A Vue.js project
+> A Vue.js project for SAE Institute Belgrade
 
 ## Build Setup
 
@@ -17,5 +17,10 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
-
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+
+You can login with admin@admin / password: admin at start.
+
+Didn't resolve the Access-Control-Allow-Origin problem trough the end,
+get routes work, post wont

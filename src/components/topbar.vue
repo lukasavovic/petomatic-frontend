@@ -1,8 +1,8 @@
 <template>
     <div class="topbar">
-        <el-menu 
-            default-active="2" 
-            class="el-menu-vertical-demo" 
+        <el-menu
+            default-active="2"
+            class="el-menu-vertical-demo"
             :collapse="isCollapse"
             background-color=""
             text-color="#545c64">
@@ -10,7 +10,7 @@
             <el-menu-item id="logo">
                 <i>P</i>
                 <span>etomatic</span>
-            </el-menu-item>  
+            </el-menu-item>
         </el-menu>
         <div class="searchbar">
             <h1>searchbar</h1>
@@ -31,7 +31,6 @@ export default {
   mounted(){
     EventBus.$on('toggle', isCollapse => {
         this.isCollapse = isCollapse;
-        console.log(this.isCollapse);
     });
   }
 }
@@ -62,7 +61,7 @@ export default {
                 padding-right: 10px;
             }
         }
-       
+
         span {
             font-size: 1.4em;
         }

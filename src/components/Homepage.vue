@@ -136,7 +136,7 @@
       log(){
         this.axios
           .get('http://petomatic.test/app/login')
-          .then(response => (console.log(response )))
+          .then(response => (console.log(response)))
           .then(this.loading = false)
       },
       editVisit(id){
@@ -146,7 +146,6 @@
           return new Date(date).getTime()
       },
       routerPush(id){
-        console.log(id);
         this.$router.push('/app/customers/' + id);
       }
     },

@@ -63,7 +63,6 @@
           }else {
             return false
           }
-          console.log(user);
           this.axios
             .post('http://petomatic.test/app/users', user)
             .then( (response) => {
@@ -72,7 +71,6 @@
               }
             })
         } else {
-          console.log(response.data);
           event.preventDefault();
         }
       }
