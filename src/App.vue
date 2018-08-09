@@ -126,7 +126,7 @@
       email: '',
       show1: false,
       password: '',
-      loggedIn: true,
+      loggedIn: false,
       dialog: false,
       drawer: null,
       items: [
