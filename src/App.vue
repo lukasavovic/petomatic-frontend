@@ -246,4 +246,7 @@ export default {
     margin: 10px auto;
   }
 }
+a{
+  text-decoration: none !important;
+}
 </style>

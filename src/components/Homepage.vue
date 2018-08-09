@@ -24,13 +24,17 @@
       >
 
         <template slot="items" slot-scope="props">
-          <tr @click="props.expanded = !props.expanded">
+          <tr>
             <td >{{ props.item.date }}</td>
             <td class="text-xs-left customerLink" @click="routerPush(props.item.customerId)">{{ props.item.firstName}} {{props.item.LastName}}</td>
             <td class="text-xs-left"> {{ props.item.petName }} </td>
             <td class="text-xs-left">{{ props.item.age }}</td>
             <td class="text-xs-left">{{ props.item.species }}</td>
             <td class="text-xs-left">{{ props.item.visit_type }}</td>
+            <td class="justify-center layout px-0">
+              <v-icon medium @click="props.expanded = !props.expanded" >keyboard_arrow_down</v-icon>
+              <v-icon medium @click="editVisit(props.item.id)">edit</v-icon>
+            </td>
           </tr>
         </template>
         <template slot="expand" slot-scope="props">
@@ -61,7 +65,6 @@
               readonly
             ></v-text-field>
             <v-date-picker v-model="dateFrom" :max="dateTo" @input="$refs.menu.save(dateFrom)"></v-date-picker>
-
           </v-menu>
         </v-flex>
         <v-flex class="datePicker">
@@ -123,7 +126,8 @@
           { text: 'Pet', sortable: false, width: '25%'},
           { text: 'Age', sortable: false, width: '10%'},
           { text: 'Species', sortable: false, width: '10%'},
-          { text: 'Visit Type', sortable: false, width: '10%'}
+          { text: 'Visit Type', sortable: false, width: '5%'},
+          { text: 'Actions', sortable: false, width: '5%'}
         ],
         allVisits: [],
       }
@@ -131,9 +135,12 @@
     methods: {
       log(){
         this.axios
-          .get('http://localhost:3005/app/login')
+          .get('http://petomatic.test/app/login')
           .then(response => (console.log(response )))
           .then(this.loading = false)
+      },
+      editVisit(id){
+        this.$router.push('/editVisit/' + id)
       },
       dateConversion(date){
           return new Date(date).getTime()
@@ -157,7 +164,7 @@
     },
     mounted(){
       this.axios
-        .get('http://localhost:3005/app')
+        .get('http://petomatic.test/app/')
         .then(response => (this.allVisits = response.data))
         .then(this.loading = false)
     }
@@ -165,7 +172,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped  lang='scss'>
+<style scoped lang='scss'>
 .homepage {
   width: 100%;
   height: 100%;

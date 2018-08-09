@@ -162,21 +162,26 @@
     },
     mounted(){
       this.axios
+        .put('http://petomatic.test/app/visit')
+        .then((response)=>{
+          console.log(response.data);
+        });
+      this.axios
         .get('http://petomatic.test/app/visit_type')
-          .then(response => (this.populateVisitTypes(response.data)));
+        .then(response => (this.populateVisitTypes(response.data)));
       this.axios
         .get('http://petomatic.test/app/customers')
-          .then(response => (this.allCustomers = response.data))
+        .then(response => (this.allCustomers = response.data))
       this.axios
         .get('http://petomatic.test/app/customers')
-          .then(response => (this.populateCustomerNames(response.data)))
+        .then(response => (this.populateCustomerNames(response.data)))
     }
   }
 </script>
 
 <style scoped lang="scss">
-button {
-  border: 2px solid darkblue;
-  padding: 25px;
-}
+  button {
+    border: 2px solid darkblue;
+    padding: 25px;
+  }
 </style>
